@@ -16,8 +16,6 @@ class RolesRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?string $pluralModelLabel = 'Badges';
-
     public function form(Form $form): Form
     {
         return $form
@@ -31,7 +29,7 @@ class RolesRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            
+            ->pluralModelLabel('Badges')
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
             ])
