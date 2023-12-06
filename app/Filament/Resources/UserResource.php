@@ -24,6 +24,14 @@ class UserResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name'),
+                Forms\Components\Tabs::make('Contact')
+                    ->schema([
+                        Forms\Components\Tabs\Tab::make('Email')
+                            ->schema([
+                                Forms\Components\TextInput::make('email')
+                                    ->hiddenOn('edit'),
+                            ])
+                    ])
             ]);
     }
 
@@ -32,13 +40,6 @@ class UserResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\ToggleColumn::make('email_verified_at')
-                    ->updateStateUsing(function ($state, $record) {
-                        $record->email_verified_at = $state ? now() : null;
-                        $record->save();
-
-                        return $state;
-                    }),
             ])
             ->filters([
                 //
@@ -64,8 +65,6 @@ class UserResource extends Resource
     {
         return [
             'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
-            'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }    
 }
